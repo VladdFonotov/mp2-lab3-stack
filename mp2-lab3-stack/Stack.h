@@ -24,6 +24,11 @@ public:
 template <class T>
 TStack<T>::TStack(int _size)
 {
+	if (_size<=0)
+	{
+		char e[] = "Size cant be negative";
+		throw e;
+	}
 	size = _size;
 	arr = new T[size];
 	num = -1;
@@ -53,7 +58,8 @@ TStack<T>& TStack<T>::operator=(const TStack<T>& st)
 	if (this != &st)
 	{
 		size = st.size;
-		arr = new T(size);
+		delete[]arr;
+		arr = new T[size];
 		num = st.num;
 		for (int i = 0; i <= num; i++)
 		{

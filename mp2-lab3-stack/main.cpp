@@ -1,14 +1,25 @@
 #include <iostream>
 #include"Calculator.h"
 
+
 using namespace std;
 
 int main() {
-	string test;
-	cin>> test;
-	TCalculator C;
-	C.SetExpr(test);
-	cout << C.Calc()<<endl;
+	
+	try {
+		
+		
+		TCalculator C;
+		string test_string;
+		cin >> test_string;
+		C.SetExpr(test_string);
+		cout << C.Calc()<<endl;
+	}
+	catch (char *e)
+	{
+		cout << e<<endl;
+	}
+
 	system("pause");
 	return 0;
 	

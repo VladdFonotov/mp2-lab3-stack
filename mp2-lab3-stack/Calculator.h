@@ -3,6 +3,7 @@
 #include<string>
 #include<math.h>
 #include "Stack.h"
+#include"fact.h"
 
 using namespace std;
 
@@ -80,6 +81,8 @@ int TCalculator::Prior(char c)
 }
 
 double TCalculator::Calc(){
+	bool flag_un_op = 0;
+	bool flag_sin1 = 0, flag_sin2 = 0, flag_sin3 = 0;
 	char *tmp;
 	double res;
 	string str = "(";
@@ -89,8 +92,42 @@ double TCalculator::Calc(){
 	st_char.Clear();
 	for (int i = 0; i < str.size(); i++)
 	{
+		if (flag_sin3==1)
+		{
+
+		}
+		if (str[i]=='s'||str[i]=='i'||str[i]=='n')
+		{
+			
+			if (str[i]=='s')
+			{
+				flag_sin1 = 1;
+			}
+			if (str[i] == 'i'&& flag_sin1==1)
+			{
+				flag_sin2 = 1;
+			}
+			else
+			{
+				flag_sin1 = 0;
+			}
+			if (str[i] == 'n'&& flag_sin2 == 1)
+			{
+				flag_sin3 = 1;
+			}
+			else
+			{
+				flag_sin1 = 0;
+				flag_sin2 = 0;
+			}
+		}
+		if (str[i] == '!') {
+			double temp_for_un_op = st_double.Pop();
+			st_double.Push(fact(temp_for_un_op));
+		}
 		if (str[i]>='0' && str[i]<='9')
 		{
+			flag_un_op = 0;
 			double d= strtod(&str[i], &tmp);
 			int j =tmp-&str[i];
 			i += j-1;
@@ -98,6 +135,8 @@ double TCalculator::Calc(){
 		}
 		if (str[i] == '(')
 		{
+			
+			flag_un_op = 1;
 			st_char.Push(str[i]);
 		}
 		if (str[i] == ')')
@@ -105,48 +144,88 @@ double TCalculator::Calc(){
 			char tmpforop = st_char.Pop();
 			while (tmpforop != '(')
 			{
-				double op1, op2;
-				op2 = st_double.Pop();
-				op1 = st_double.Pop();
-				switch (tmpforop)
-				{
-				case '+':
-					st_double.Push(op1 + op2); break;
-				case '-':
-					st_double.Push(op1 - op2); break;
-				case '*':
-					st_double.Push(op1 * op2); break;
-				case '/':
-					st_double.Push (op1 / op2); break;
-				case '^':
-					st_double.Push(pow(op1, op2)); break;
+				if (st_double.IsEmpty()) {
+					char e[] = "Not enough operands";
+					throw e;
 				}
-				tmpforop = st_char.Pop();
+				else
+				{
+					double op1, op2;
+					op2 = st_double.Pop();
+					if (st_double.IsEmpty()) {
+						char e[] = "Not enough operands";
+						throw e;
+					}
+					else
+					{
+						op1 = st_double.Pop();
+						switch (tmpforop)
+						{
+						case '+':
+							st_double.Push(op1 + op2); break;
+						case '-':
+							st_double.Push(op1 - op2); break;
+						case '*':
+							st_double.Push(op1 * op2); break;
+						case '/':
+							st_double.Push(op1 / op2); break;
+						case '^':
+							st_double.Push(pow(op1, op2)); break;
+						}
+						tmpforop = st_char.Pop();
+					}
+				}
 			}
 		}
 		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '^')
 		{
+			if (flag_un_op == 1)
+			{
+				if (str[i]=='+'||str[i]=='-')
+				{
+					st_double.Push(0);
+				}
+				else
+				{
+					char e[] = "Uncorrect expressions";
+					throw e;
+				}
+			}
 			char tmpforop = st_char.Pop();
 			while (Prior(str[i]) <= Prior(tmpforop))
 			{
-				double op1, op2;
-				op2 = st_double.Pop();
-				op1 = st_double.Pop();
-				switch (tmpforop)
-				{
-				case '+':
-					res = op1 + op2; break;
-				case '-':
-					res = op1 - op2; break;
-				case '*':
-					res = op1 * op2; break;
-				case '/':
-					res = op1 / op2; break;
-				case '^':
-					res = pow(op1, op2); break;
+				if (st_double.IsEmpty()) {
+					char e[] = "Not enough operands";
+					throw e;
 				}
-				st_double.Push(res);
-				tmpforop = st_char.Pop();
+				else
+				{
+					double op1, op2;
+					op2 = st_double.Pop();
+					if (st_double.IsEmpty()) {
+						char e[] = "Not enough operands";
+						throw e;
+					}
+					else
+					{
+						op1 = st_double.Pop();
+						switch (tmpforop)
+						{
+						case '+':
+							res = op1 + op2; break;
+						case '-':
+							res = op1 - op2; break;
+						case '*':
+							res = op1 * op2; break;
+						case '/':
+							res = op1 / op2; break;
+						case '^':
+							res = pow(op1, op2); break;
+						}
+						st_double.Push(res);
+						tmpforop = st_char.Pop();
+					}
+				}
 			}
 			st_char.Push(tmpforop);
 			st_char.Push(str[i]);
