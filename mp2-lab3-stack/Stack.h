@@ -1,13 +1,12 @@
 #pragma once
 #include<iostream>
 
-using namespace std;
 template <class T>
 class TStack
 {
 private:
-	T *arr;
-	int size;
+	T *arr; 
+	int size; 
 	int num;
 public:
 	TStack(int _size = 100);

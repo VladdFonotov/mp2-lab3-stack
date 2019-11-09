@@ -1,9 +1,14 @@
 #include <iostream>
+#include"Calculator.h"
+
 using namespace std;
-#include "Calculator.h"
 
 int main() {
-	cout << "Hello" << endl;
+	string test;
+	cin>> test;
+	TCalculator C;
+	C.SetExpr(test);
+	cout << C.Calc()<<endl;
 	system("pause");
 	return 0;
 	
