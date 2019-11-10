@@ -132,8 +132,9 @@ TEST(TStack, can_check_top_elem_from_stack)
 		EXPECT_EQ(st.Pop(), i);
 	}
 }
-
+/*
 TEST(TStack, stop)
 {
 	system("pause");
 }
+*/

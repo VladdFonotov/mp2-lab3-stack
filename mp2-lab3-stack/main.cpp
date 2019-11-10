@@ -19,7 +19,6 @@ int main() {
 	{
 		cout << e<<endl;
 	}
-	
 	system("pause");
 	return 0;
 	

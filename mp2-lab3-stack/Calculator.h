@@ -38,7 +38,7 @@ public:
 	double Calc();
 };
 
-TCalculator::TCalculator() :st_char(50),st_double(50)
+TCalculator::TCalculator() :st_char(64),st_double(64)
 {
 }
 
