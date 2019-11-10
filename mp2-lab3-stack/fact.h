@@ -2,12 +2,21 @@
 #include <iostream>
 
 double fact(int n) {
-	if (n == 0)
+	if (n < 0)
 	{
-		return 1;
+		char e[] = "Uncorrect expressions";
+		throw e;
 	}
 	else
 	{
-		return(n*fact(n - 1));
+
+		if (n == 0)
+		{
+			return 1;
+		}
+		else
+		{
+			return(n*fact(n - 1));
+		}
 	}
 }

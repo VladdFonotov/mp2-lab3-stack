@@ -1,4 +1,19 @@
+/*
+sin=s;
+cos=c;
+tan=t;
+exp=e;
+log=l;
+arcsin=S;
+arccos=C;
+arctan=T;
+sinh=n;
+cosh=o;
+tan=a;
+*/
 #pragma once
+#define _USE_MATH_DEFINES
+
 #include<iostream>
 #include<string>
 #include<math.h>
@@ -78,11 +93,12 @@ int TCalculator::Prior(char c)
 	{
 		return 3;
 	}
+	
 }
 
 double TCalculator::Calc(){
 	bool flag_un_op = 0;
-	bool flag_sin1 = 0, flag_sin2 = 0, flag_sin3 = 0;
+	bool flag_sin = 0;
 	char *tmp;
 	double res;
 	string str = "(";
@@ -92,33 +108,87 @@ double TCalculator::Calc(){
 	st_char.Clear();
 	for (int i = 0; i < str.size(); i++)
 	{
-		if (flag_sin3==1)
-		{
-
+		if (str[i] == 'p') {
+			if (!strncmp(&str[i], "pi", 2)) {
+				st_double.Push(M_PI);
+				i = i + 2;
+				flag_un_op = 0;
+			}
 		}
-		if (str[i]=='s'||str[i]=='i'||str[i]=='n')
+		if (str[i]=='a')
 		{
-			
-			if (str[i]=='s')
-			{
-				flag_sin1 = 1;
+			if (!strncmp(&str[i], "arcsin", 6)) {
+				st_char.Push('S');
+				i = i + 6;
 			}
-			if (str[i] == 'i'&& flag_sin1==1)
-			{
-				flag_sin2 = 1;
+			if (!strncmp(&str[i], "arccos", 6)) {
+				st_char.Push('C');
+				i = i + 6;
 			}
-			else
-			{
-				flag_sin1 = 0;
+			if (!strncmp(&str[i], "arctan", 6)) {
+				st_char.Push('T');
+				i = i + 6;
 			}
-			if (str[i] == 'n'&& flag_sin2 == 1)
-			{
-				flag_sin3 = 1;
+		}
+		if (str[i] == 's'||str[i]=='c'||str[i]=='e'||str[i]=='t'||str[i]=='l')
+		{
+			if (!strncmp(&str[i], "log", 3)) {
+				st_char.Push('l');
+				i = i + 3;
 			}
-			else
+			if (str[i] == 's')
 			{
-				flag_sin1 = 0;
-				flag_sin2 = 0;
+				if (!strncmp(&str[i], "sinh", 4)) {
+					st_char.Push('n');
+					i = i + 4;
+				}
+				else
+				{
+					if (!strncmp(&str[i], "sin", 3)) {
+						st_char.Push('s');
+						i = i + 3;
+					}
+				}
+			}
+			if (str[i] == 'c')
+			{
+				if (!strncmp(&str[i], "cosh", 4)) {
+					st_char.Push('o');
+					i = i + 4;
+				}
+				else
+				{
+					if (!strncmp(&str[i], "cos", 3)) {
+						st_char.Push('c');
+						i = i + 3;
+					}
+				}
+			}
+			if (str[i] == 'e') {
+				if (!strncmp(&str[i], "exp", 3)) {
+					st_char.Push('e');
+					i = i + 3;
+				}
+				else
+				{
+					st_double.Push(M_E);
+					i ++;
+					flag_un_op = 0;
+				}
+			}
+			if (str[i] == 't')
+			{
+				if (!strncmp(&str[i], "tanh", 4)) {
+					st_char.Push('a');
+					i = i + 4;
+				}
+				else
+				{
+					if (!strncmp(&str[i], "tan", 3)) {
+						st_char.Push('t');
+						i = i + 3;
+					}
+				}
 			}
 		}
 		if (str[i] == '!') {
@@ -150,29 +220,67 @@ double TCalculator::Calc(){
 				}
 				else
 				{
+					
 					double op1, op2;
 					op2 = st_double.Pop();
-					if (st_double.IsEmpty()) {
-						char e[] = "Not enough operands";
-						throw e;
-					}
-					else
+					switch (tmpforop)
 					{
-						op1 = st_double.Pop();
-						switch (tmpforop)
-						{
-						case '+':
-							st_double.Push(op1 + op2); break;
-						case '-':
-							st_double.Push(op1 - op2); break;
-						case '*':
-							st_double.Push(op1 * op2); break;
-						case '/':
-							st_double.Push(op1 / op2); break;
-						case '^':
-							st_double.Push(pow(op1, op2)); break;
+						case 's':
+							st_double.Push(sin(op2));
+							tmpforop = st_char.Pop(); break;
+						case 'c':
+							st_double.Push(cos(op2));
+							tmpforop = st_char.Pop(); break;
+						case 'e':
+							st_double.Push(exp(op2));
+							tmpforop = st_char.Pop(); break;
+						case 't':
+							st_double.Push(tan(op2));
+							tmpforop = st_char.Pop(); break;
+						case 'l':
+							st_double.Push(log(op2));
+							tmpforop = st_char.Pop(); break;
+						case 'S':
+							st_double.Push(asin(op2));
+							tmpforop = st_char.Pop(); break;
+						case 'C':
+							st_double.Push(acos(op2));
+							tmpforop = st_char.Pop(); break;
+						case 'T':
+							st_double.Push(atan(op2));
+							tmpforop = st_char.Pop(); break;
+						case 'n':
+							st_double.Push(sinh(op2));
+							tmpforop = st_char.Pop(); break;
+						case 'o':
+							st_double.Push(cosh(op2));
+							tmpforop = st_char.Pop(); break;
+						case 'a':
+							st_double.Push(tanh(op2));
+							tmpforop = st_char.Pop(); break;
+						default:
+						if (st_double.IsEmpty()) {
+							char e[] = "Not enough operands";
+							throw e;
 						}
-						tmpforop = st_char.Pop();
+						else
+						{
+							op1 = st_double.Pop();
+							switch (tmpforop)
+							{
+							case '+':
+								st_double.Push(op1 + op2); break;
+							case '-':
+								st_double.Push(op1 - op2); break;
+							case '*':
+								st_double.Push(op1 * op2); break;
+							case '/':
+								st_double.Push(op1 / op2); break;
+							case '^':
+								st_double.Push(pow(op1, op2)); break;
+							}
+							tmpforop = st_char.Pop();
+						}
 					}
 				}
 			}
@@ -202,28 +310,66 @@ double TCalculator::Calc(){
 				{
 					double op1, op2;
 					op2 = st_double.Pop();
-					if (st_double.IsEmpty()) {
-						char e[] = "Not enough operands";
-						throw e;
-					}
-					else
+					switch (tmpforop)
 					{
-						op1 = st_double.Pop();
-						switch (tmpforop)
-						{
-						case '+':
-							res = op1 + op2; break;
-						case '-':
-							res = op1 - op2; break;
-						case '*':
-							res = op1 * op2; break;
-						case '/':
-							res = op1 / op2; break;
-						case '^':
-							res = pow(op1, op2); break;
+					case 's':
+						st_double.Push(sin(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'c':
+						st_double.Push(cos(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'e':
+						st_double.Push(exp(op2));
+						tmpforop = st_char.Pop(); break;
+					case 't':
+						st_double.Push(tan(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'l':
+						st_double.Push(log(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'S':
+						st_double.Push(asin(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'C':
+						st_double.Push(acos(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'T':
+						st_double.Push(atan(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'n':
+						st_double.Push(sinh(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'o':
+						st_double.Push(cosh(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'a':
+						st_double.Push(tanh(op2));
+						tmpforop = st_char.Pop(); break;
+					default:
+						if (st_double.IsEmpty()) {
+							char e[] = "Not enough operands";
+							throw e;
 						}
-						st_double.Push(res);
-						tmpforop = st_char.Pop();
+						else
+						{
+							op1 = st_double.Pop();
+							switch (tmpforop)
+							{
+							case '+':
+								res = op1 + op2; break;
+							case '-':
+								res = op1 - op2; break;
+							case '*':
+								res = op1 * op2; break;
+							case '/':
+								
+								res = op1 / op2; break;
+							case '^':
+								res = pow(op1, op2); break;
+							}
+							st_double.Push(res);
+							tmpforop = st_char.Pop();
+						}
 					}
 				}
 			}
