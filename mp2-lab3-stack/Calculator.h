@@ -10,7 +10,9 @@ arctan=T;
 sinh=n;
 cosh=o;
 tan=a;
+abs=m;
 */
+
 #pragma once
 #define _USE_MATH_DEFINES
 
@@ -38,7 +40,7 @@ public:
 	double Calc();
 };
 
-TCalculator::TCalculator() :st_char(64),st_double(64)
+TCalculator::TCalculator() :st_char(64), st_double(64)
 {
 }
 
@@ -77,11 +79,11 @@ bool TCalculator::Check() {
 
 int TCalculator::Prior(char c)
 {
-	if (c=='(')
+	if (c == '(')
 	{
 		return 0;
 	}
-	if (c == '+'||c=='-')
+	if (c == '+' || c == '-')
 	{
 		return 1;
 	}
@@ -93,10 +95,13 @@ int TCalculator::Prior(char c)
 	{
 		return 3;
 	}
-	
+	if (c == 's' || c == 'c'||c == 't' || c == 'e' || c == 'l' || c == 'S' || c == 'C' || c == 'T' || c == 'n' || c == 'o' || c == 'a' || c == 'm')
+	{
+		return 4;
+	}
 }
 
-double TCalculator::Calc(){
+double TCalculator::Calc() {
 	bool flag_un_op = 0;
 	bool flag_sin = 0;
 	char *tmp;
@@ -115,7 +120,7 @@ double TCalculator::Calc(){
 				flag_un_op = 0;
 			}
 		}
-		if (str[i]=='a')
+		if (str[i] == 'a')
 		{
 			if (!strncmp(&str[i], "arcsin", 6)) {
 				st_char.Push('S');
@@ -129,8 +134,12 @@ double TCalculator::Calc(){
 				st_char.Push('T');
 				i = i + 6;
 			}
+			if (!strncmp(&str[i], "abs", 3)) {
+				st_char.Push('m');
+				i = i + 3;
+			}
 		}
-		if (str[i] == 's'||str[i]=='c'||str[i]=='e'||str[i]=='t'||str[i]=='l')
+		if (str[i] == 's' || str[i] == 'c' || str[i] == 'e' || str[i] == 't' || str[i] == 'l')
 		{
 			if (!strncmp(&str[i], "log", 3)) {
 				st_char.Push('l');
@@ -172,7 +181,7 @@ double TCalculator::Calc(){
 				else
 				{
 					st_double.Push(M_E);
-					i ++;
+					i++;
 					flag_un_op = 0;
 				}
 			}
@@ -195,17 +204,16 @@ double TCalculator::Calc(){
 			double temp_for_un_op = st_double.Pop();
 			st_double.Push(fact(temp_for_un_op));
 		}
-		if (str[i]>='0' && str[i]<='9')
+		if (str[i] >= '0' && str[i] <= '9')
 		{
 			flag_un_op = 0;
-			double d= strtod(&str[i], &tmp);
-			int j =tmp-&str[i];
-			i += j-1;
+			double d = strtod(&str[i], &tmp);
+			int j = tmp - &str[i];
+			i += j - 1;
 			st_double.Push(d);
 		}
 		if (str[i] == '(')
 		{
-			
 			flag_un_op = 1;
 			st_char.Push(str[i]);
 		}
@@ -220,45 +228,48 @@ double TCalculator::Calc(){
 				}
 				else
 				{
-					
+
 					double op1, op2;
 					op2 = st_double.Pop();
 					switch (tmpforop)
 					{
-						case 's':
-							st_double.Push(sin(op2));
-							tmpforop = st_char.Pop(); break;
-						case 'c':
-							st_double.Push(cos(op2));
-							tmpforop = st_char.Pop(); break;
-						case 'e':
-							st_double.Push(exp(op2));
-							tmpforop = st_char.Pop(); break;
-						case 't':
-							st_double.Push(tan(op2));
-							tmpforop = st_char.Pop(); break;
-						case 'l':
-							st_double.Push(log(op2));
-							tmpforop = st_char.Pop(); break;
-						case 'S':
-							st_double.Push(asin(op2));
-							tmpforop = st_char.Pop(); break;
-						case 'C':
-							st_double.Push(acos(op2));
-							tmpforop = st_char.Pop(); break;
-						case 'T':
-							st_double.Push(atan(op2));
-							tmpforop = st_char.Pop(); break;
-						case 'n':
-							st_double.Push(sinh(op2));
-							tmpforop = st_char.Pop(); break;
-						case 'o':
-							st_double.Push(cosh(op2));
-							tmpforop = st_char.Pop(); break;
-						case 'a':
-							st_double.Push(tanh(op2));
-							tmpforop = st_char.Pop(); break;
-						default:
+					case 's':
+						st_double.Push(sin(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'c':
+						st_double.Push(cos(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'e':
+						st_double.Push(exp(op2));
+						tmpforop = st_char.Pop(); break;
+					case 't':
+						st_double.Push(tan(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'l':
+						st_double.Push(log(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'S':
+						st_double.Push(asin(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'C':
+						st_double.Push(acos(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'T':
+						st_double.Push(atan(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'n':
+						st_double.Push(sinh(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'o':
+						st_double.Push(cosh(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'a':
+						st_double.Push(tanh(op2));
+						tmpforop = st_char.Pop(); break;
+					case 'm':
+						st_double.Push(abs(op2));
+						tmpforop = st_char.Pop(); break;
+					default:
 						if (st_double.IsEmpty()) {
 							char e[] = "Not enough operands";
 							throw e;
@@ -289,7 +300,7 @@ double TCalculator::Calc(){
 		{
 			if (flag_un_op == 1)
 			{
-				if (str[i]=='+'||str[i]=='-')
+				if (str[i] == '+' || str[i] == '-')
 				{
 					st_double.Push(0);
 				}
@@ -345,6 +356,9 @@ double TCalculator::Calc(){
 					case 'a':
 						st_double.Push(tanh(op2));
 						tmpforop = st_char.Pop(); break;
+					case 'm':
+						st_double.Push(abs(op2));
+						tmpforop = st_char.Pop(); break;
 					default:
 						if (st_double.IsEmpty()) {
 							char e[] = "Not enough operands";
@@ -362,7 +376,6 @@ double TCalculator::Calc(){
 							case '*':
 								res = op1 * op2; break;
 							case '/':
-								
 								res = op1 / op2; break;
 							case '^':
 								res = pow(op1, op2); break;
@@ -375,7 +388,6 @@ double TCalculator::Calc(){
 			}
 			st_char.Push(tmpforop);
 			st_char.Push(str[i]);
-			
 		}
 	}
 	return st_double.Pop();

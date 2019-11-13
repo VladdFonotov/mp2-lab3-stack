@@ -1,4 +1,3 @@
-
 #include "gtest.h"
 #include"../mp2-lab3-stack/Calculator.h"
 
@@ -6,6 +5,7 @@ TEST(TCalculator, can_create_calc)
 {
   ASSERT_NO_THROW(TCalculator c);
 }
+
 TEST(TCalculator, can_set_expr)
 {
 	TCalculator c;
@@ -30,8 +30,8 @@ TEST(TCalculator, check_function_works_correctly)
 	c.SetExpr("(2)+(2))");
 	ASSERT_NO_THROW(c.Check());
 	EXPECT_EQ(c.Check(), 0);
-
 }
+
 TEST(TCalculator, un_minus_works_correctly)
 {
 	TCalculator c;
@@ -48,6 +48,7 @@ TEST(TCalculator, un_minus_works_correctly)
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), -0.5);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_with_plus_for_int)
 {
 	TCalculator c;
@@ -58,6 +59,7 @@ TEST(TCalculator, cacl_function_works_correctly_with_plus_for_int)
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(),7);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_with_plus_for_double)
 {
 	TCalculator c;
@@ -72,6 +74,7 @@ TEST(TCalculator, cacl_function_works_correctly_with_plus_for_double)
 	double sum = (1.0/ 2) + (1.0/ 4);
 	EXPECT_EQ(c.Calc(),sum);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_with_minus_for_int)
 {
 	TCalculator c;
@@ -85,6 +88,7 @@ TEST(TCalculator, cacl_function_works_correctly_with_minus_for_int)
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(),-7);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_with_minus_for_double)
 {
 	TCalculator c;
@@ -99,6 +103,7 @@ TEST(TCalculator, cacl_function_works_correctly_with_minus_for_double)
 	double sum = (1.0 / 2) -(1.0 / 4);
 	EXPECT_EQ(c.Calc(), sum);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_with_mult_for_int)
 {
 	TCalculator c;
@@ -112,6 +117,7 @@ TEST(TCalculator, cacl_function_works_correctly_with_mult_for_int)
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), 5*(-7));
 }
+
 TEST(TCalculator, cacl_function_works_correctly_with_mult_for_double)
 {
 	TCalculator c;
@@ -132,6 +138,7 @@ TEST(TCalculator, cacl_function_works_correctly_with_mult_for_double)
 	 sum = 1 * (1.0 / 2);
 	EXPECT_EQ(c.Calc(),sum);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_with_div_for_int)
 {
 	TCalculator c;
@@ -171,8 +178,8 @@ TEST(TCalculator, cacl_function_works_correctly_with_diff_op_for_double)
 	c.SetExpr("(1/5.1)/0");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), INFINITY);
-
 }
+
 TEST(TCalculator, cacl_function_works_correctly_with_vozv_v_step_for_int)
 {
 	TCalculator c;
@@ -198,8 +205,8 @@ TEST(TCalculator, cacl_function_works_correctly_with_vozv_v_step_for_int)
 	ASSERT_NO_THROW(c.Calc());
 	sum = pow((-2),4);
 	EXPECT_EQ(c.Calc(), sum);
-
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_diff_alg_op) {
 	TCalculator c;
 	double res;
@@ -222,6 +229,7 @@ TEST(TCalculator, cacl_function_works_correctly_for_diff_alg_op) {
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), ((5 / 5) + ((pow(2,5)) - 1 + 8 * 7) - 1));
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_fact) {
 	TCalculator c;
 	c.SetExpr("5!");
@@ -242,7 +250,51 @@ TEST(TCalculator, cacl_function_works_correctly_for_fact) {
 	c.SetExpr("1/5!");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), 1/fact(5));
+	c.SetExpr("3+(3+1)!");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), 3 + fact(3+1));
+	c.SetExpr("(3+1)!+3");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), 3 + fact(3 + 1));
+	c.SetExpr("((3*2)+1)!+3");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), 3 + fact((3*2) + 1));
 }
+
+TEST(TCalculator, cacl_function_works_correctly_for_abs) {
+	TCalculator c;
+	c.SetExpr("abs(5)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), abs(5));
+	c.SetExpr("abs(3!)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), abs(fact(3)));
+	c.SetExpr("abs(0)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), abs(0));
+	c.SetExpr("abs(5+3)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), abs(8));
+	c.SetExpr("abs(-5)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), 5);
+	c.SetExpr("(abs((-2)^3)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), 8);
+	c.SetExpr("(abs(5-7)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), 2);
+	c.SetExpr("(5+abs(5-7)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), 7);
+	c.SetExpr("(-5+abs(5-7)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), -3);
+	c.SetExpr("(5+abs(5-7)+10");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), 17);
+}
+
 TEST(TCalculator, cacl_function_works_correctly_for_pi) {
 	TCalculator c;
 	c.SetExpr("pi");
@@ -270,6 +322,7 @@ TEST(TCalculator, cacl_function_works_correctly_for_pi) {
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(2,M_PI));
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_e) {
 	TCalculator c;
 	c.SetExpr("e");
@@ -297,6 +350,7 @@ TEST(TCalculator, cacl_function_works_correctly_for_e) {
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(2, M_E));
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_sin) {
 	TCalculator c;
 	c.SetExpr("sin(1)");
@@ -335,10 +389,17 @@ TEST(TCalculator, cacl_function_works_correctly_for_sin) {
 	c.SetExpr("sin(3!)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(),sin(fact(3)));
-	c.SetExpr("(cos(5))^(-5)");
+	c.SetExpr("(sin(5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
-	EXPECT_EQ(c.Calc(), pow(cos(5), -5));
+	EXPECT_EQ(c.Calc(), pow(sin(5), -5));
+	c.SetExpr("sin(5+1)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), sin(5+1)+100);
+	c.SetExpr("100+sin(5+1)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(),sin(5 + 1) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_cos) {
 	TCalculator c;
 	c.SetExpr("cos(1)");
@@ -380,7 +441,14 @@ TEST(TCalculator, cacl_function_works_correctly_for_cos) {
 	c.SetExpr("(cos(5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(cos(5), -5));
+	c.SetExpr("cos(5+1)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), cos(5 + 1) + 100);
+	c.SetExpr("100+cos(5+1)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), cos(5 + 1) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_tan) {
 	TCalculator c;
 	c.SetExpr("tan(1)");
@@ -422,7 +490,14 @@ TEST(TCalculator, cacl_function_works_correctly_for_tan) {
 	c.SetExpr("(tan(5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(tan(5), -5));
+	c.SetExpr("tan(5+1)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), tan(5 + 1) + 100);
+	c.SetExpr("100+tan(5+1)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), tan(5 + 1) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_exp) {
 	TCalculator c;
 	c.SetExpr("exp(1)");
@@ -464,8 +539,14 @@ TEST(TCalculator, cacl_function_works_correctly_for_exp) {
 	c.SetExpr("(exp(5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(exp(5),-5));
-
+	c.SetExpr("exp(5+1)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), exp(5 + 1) + 100);
+	c.SetExpr("100+exp(5+1)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), exp(5 + 1) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_log) {
 	TCalculator c;
 	c.SetExpr("log(1)");
@@ -507,7 +588,14 @@ TEST(TCalculator, cacl_function_works_correctly_for_log) {
 	c.SetExpr("(log(5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(log(5), -5));
+	c.SetExpr("log(5+1)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), log(5 + 1) + 100);
+	c.SetExpr("100+log(5+1)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), log(5 + 1) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_arcsin) {
 	TCalculator c;
 	c.SetExpr("arcsin(1/2)");
@@ -549,8 +637,14 @@ TEST(TCalculator, cacl_function_works_correctly_for_arcsin) {
 	c.SetExpr("(arcsin(1/5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(asin(1.0/5), -5));
-
+	c.SetExpr("arcsin(1/8+1/7)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), asin(1.0/8+ 1.0/7) + 100);
+	c.SetExpr("100+arcsin(1/8+1/7)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), asin(1.0/8 + 1.0/7) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_arccos) {
 	TCalculator c;
 	c.SetExpr("arccos(1/2)");
@@ -592,7 +686,14 @@ TEST(TCalculator, cacl_function_works_correctly_for_arccos) {
 	c.SetExpr("(arccos(1/5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(acos(1.0 / 5), -5));
+	c.SetExpr("arccos(1/8+1/7)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), acos(1.0 / 8 + 1.0 / 7) + 100);
+	c.SetExpr("100+arccos(1/8+1/7)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), acos(1.0 / 8 + 1.0 / 7) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_arctan) {
 	TCalculator c;
 	c.SetExpr("arctan(1/2)");
@@ -634,7 +735,14 @@ TEST(TCalculator, cacl_function_works_correctly_for_arctan) {
 	c.SetExpr("(arctan(1/5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(atan(1.0 / 5), -5));
+	c.SetExpr("arctan(1/8+1/7)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), atan(1.0 / 8 + 1.0 / 7) + 100);
+	c.SetExpr("100+arctan(1/8+1/7)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), atan(1.0 / 8 + 1.0 / 7) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_sinh) {
 	TCalculator c;
 	c.SetExpr("sinh(1/2)");
@@ -676,7 +784,14 @@ TEST(TCalculator, cacl_function_works_correctly_for_sinh) {
 	c.SetExpr("(sinh(1/5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(sinh(1.0 / 5), -5));
+	c.SetExpr("sinh(1/8+1/7)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), sinh(1.0 / 8 + 1.0 / 7) + 100);
+	c.SetExpr("100+sinh(1/8+1/7)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), sinh(1.0 / 8 + 1.0 / 7) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_cosh) {
 	TCalculator c;
 	c.SetExpr("cosh(1/2)");
@@ -718,7 +833,14 @@ TEST(TCalculator, cacl_function_works_correctly_for_cosh) {
 	c.SetExpr("(cosh(1/5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(cosh(1.0 / 5), -5));
+	c.SetExpr("cosh(1/8+1/7)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), cosh(1.0 / 8 + 1.0 / 7) + 100);
+	c.SetExpr("100+cosh(1/8+1/7)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), cosh(1.0 / 8 + 1.0 / 7) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_tanh) {
 	TCalculator c;
 	c.SetExpr("tanh(1/2)");
@@ -760,7 +882,14 @@ TEST(TCalculator, cacl_function_works_correctly_for_tanh) {
 	c.SetExpr("(tanh(1/5))^(-5)");
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(), pow(tanh(1.0 / 5), -5));
+	c.SetExpr("tanh(1/8+1/7)+100");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), tanh(1.0 / 8 + 1.0 / 7) + 100);
+	c.SetExpr("100+tanh(1/8+1/7)");
+	ASSERT_NO_THROW(c.Calc());
+	EXPECT_EQ(c.Calc(), tanh(1.0 / 8 + 1.0 / 7) + 100);
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_trig_func) {
 	TCalculator c;
 	c.SetExpr("sin(sin(sin(1/2)))");
@@ -788,6 +917,7 @@ TEST(TCalculator, cacl_function_works_correctly_for_trig_func) {
 	ASSERT_NO_THROW(c.Calc());
 	EXPECT_EQ(c.Calc(),asin(pow(acos(1.0 / 32), -5)));
 }
+
 TEST(TCalculator, cacl_function_works_correctly_for_all_func) {
 	TCalculator c;
 	c.SetExpr("1+((exp(5)+sin(1)-sin(3!))/(5!))^(-1)");

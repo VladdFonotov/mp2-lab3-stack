@@ -5,7 +5,6 @@
 using namespace std;
 
 int main() {
-	
 	try {
 		for (;;) {
 			TCalculator C;
@@ -21,5 +20,4 @@ int main() {
 	}
 	system("pause");
 	return 0;
-	
 }

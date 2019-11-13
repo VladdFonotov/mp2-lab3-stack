@@ -119,6 +119,7 @@ TEST(TStack,trur_equalizatin_stacks)
 		EXPECT_EQ(st.Pop(),i);
 	}
 }
+
 TEST(TStack, can_check_top_elem_from_stack)
 {
 	TStack<int> st(5);
@@ -132,9 +133,3 @@ TEST(TStack, can_check_top_elem_from_stack)
 		EXPECT_EQ(st.Pop(), i);
 	}
 }
-/*
-TEST(TStack, stop)
-{
-	system("pause");
-}
-*/
