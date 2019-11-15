@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mp2-lab3-stack", "mp2-lab3-stack\mp2-lab3-stack.vcxproj", "{3EC438C0-F951-4273-A561-25272EA386A1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_calc", "test_calc\test_calc.vcxproj", "{064A4CCD-0382-45CC-90B2-296933891A0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{3EC438C0-F951-4273-A561-25272EA386A1}.Release|x64.Build.0 = Release|x64
 		{3EC438C0-F951-4273-A561-25272EA386A1}.Release|x86.ActiveCfg = Release|Win32
 		{3EC438C0-F951-4273-A561-25272EA386A1}.Release|x86.Build.0 = Release|Win32
+		{064A4CCD-0382-45CC-90B2-296933891A0A}.Debug|x64.ActiveCfg = Debug|x64
+		{064A4CCD-0382-45CC-90B2-296933891A0A}.Debug|x64.Build.0 = Debug|x64
+		{064A4CCD-0382-45CC-90B2-296933891A0A}.Debug|x86.ActiveCfg = Debug|Win32
+		{064A4CCD-0382-45CC-90B2-296933891A0A}.Debug|x86.Build.0 = Debug|Win32
+		{064A4CCD-0382-45CC-90B2-296933891A0A}.Release|x64.ActiveCfg = Release|x64
+		{064A4CCD-0382-45CC-90B2-296933891A0A}.Release|x64.Build.0 = Release|x64
+		{064A4CCD-0382-45CC-90B2-296933891A0A}.Release|x86.ActiveCfg = Release|Win32
+		{064A4CCD-0382-45CC-90B2-296933891A0A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
