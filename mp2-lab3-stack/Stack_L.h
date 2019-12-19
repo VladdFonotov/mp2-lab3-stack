@@ -32,13 +32,9 @@ TStack<T>::TStack()
 }
 
 template <class T>
-TStack<T>::~TStack()//////////////////tmp==NULL
+TStack<T>::~TStack()//////////////////
 {
 	TNode<T> *tmp = pFirst;
-	if (tmp==NULL)
-	{
-		delete tmp;
-	}
 	while (pFirst!=NULL)
 	{
 		pFirst = pFirst->pNext;
