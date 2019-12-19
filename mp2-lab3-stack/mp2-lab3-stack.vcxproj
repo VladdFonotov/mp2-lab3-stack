@@ -121,6 +121,7 @@
     <ClInclude Include="Calculator.h" />
     <ClInclude Include="fact.h" />
     <ClInclude Include="Stack.h" />
+    <ClInclude Include="Stack_L.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

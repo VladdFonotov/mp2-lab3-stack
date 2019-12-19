@@ -1,6 +1,7 @@
 #include "gtest.h"
 #include"../mp2-lab3-stack/Calculator.h"
 
+
 TEST(TCalculator, can_create_calc)
 {
   ASSERT_NO_THROW(TCalculator c);
